@@ -1,0 +1,29 @@
+﻿@model SteadyStrong.Mvc.Models.Exercise
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="breadcrumb">
+    <a asp-action="Index" class="breadcrumb-item">Exercises</a>
+    <span class="breadcrumb-item active">View "@Model.Name"</span>
+</div>
+
+<h2>Details</h2>
+
+<div>
+    <h4>Exercise</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

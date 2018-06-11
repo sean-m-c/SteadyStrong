@@ -1,0 +1,136 @@
+﻿@model WorkoutsCreateViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+@section Styles {
+    @* This will be injected into the _Layout.cshtml "Styles" section at the end of the <head> when the page is rendered. *@
+    <link rel="stylesheet" href="~/css/workoutsCreate.css" />
+}
+
+<div class="breadcrumb">
+    <a asp-action="Index" class="breadcrumb-item">Workouts</a>
+    <span class="breadcrumb-item active">Create new</span>
+</div>
+
+<h2>Create Workout</h2>
+
+<hr />
+
+
+<form  id="workouts-create__form" asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="row mb-5">
+        <div class="col">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control form-control-lg" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="col">
+            <label asp-for="CreatedTimestamp"></label>
+            <input asp-for="CreatedTimestamp" type="datetime-local" class="form-control form-control-lg" />
+            <span asp-validation-for="CreatedTimestamp" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div id="excercise__container" class="excercises__container--empty mb-5">
+        <div id="exercise__list">
+            <button type="button"
+                    data-toggle="modal" data-target="#exercise-modal"
+                    id="workouts__trigger--exercise-add" class="btn btn-primary btn-lg btn-block">
+                <i class="far fa-plus-square"></i> Add an exercise
+            </button>
+        </div>
+    </div>
+    <hr />
+    <div class="form-group">
+        <input type="submit" value="Save your workout" class="btn btn-lg btn-block btn-outline-primary" />
+    </div>
+</form>
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+<div class="modal fade modal-fullscreen" id="exercise-modal" tabindex="-1" role="dialog" aria-labelledby="exercise-modal__header-text" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-sm-center">
+                <h5 class="modal-title" id="exercise-modal__header-text">
+                    Choose Exercise or <a class="exercise__trigger-create-exercise btn btn-outline-secondary" asp-controller="exercises" asp-action="Create" target="_blank">Create New Exercise</a>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="exercise-modal__loading alert alert-info text-sm-center"><i class="fas fa-spinner fa-spin"></i> Loading exercises...</div>
+                <div class="exercise-modal__list list-group list-group-flush"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<template id="workouts__templates__exercise-instance">
+    @* An instance of an exercise (e.g "Benchpress") to which exercise sets can be added. *@
+    <div class="exercise-instance card">
+        <div class="card-body">
+            <input type="hidden" id="ExerciseName" name="ExerciseName" value="" />
+            <input type="hidden" id="ExerciseId" name="ExerciseId" value="" />
+            <a href="#" class="exercise-instance__trigger--remove-exercise-instance float-right" tabindex="-1">
+                <i class="far fa-times-circle fa-2x"></i><span class="sr-only">Remove exercise from workout</span>
+            </a>
+            <h3 class="exercise-instance__name card-title"></h3>
+            <div class="form-row exercise-instance-exercise-set-header">
+                <div class="col">Repetitions</div>
+                <div class="col">Weight</div>
+                <div class="col-auto"><i class="far fa-times-circle fa-2x fa-placeholder"></i></div>
+            </div>
+            <ol class="exercise-instance__exercise-set-list"></ol>
+            <a href="#" class="exercise-instance__trigger--add-exercise-set card-link"><i class="fa fa-plus-square" aria-hidden="true"></i> Add set</a>
+        </div>
+    </div>
+</template>
+
+
+<template id="workouts__templates__exercise-set-instance">
+    @* An instance of an exercise set; for example, benchpress for 12 repetitions. *@
+    <li class="exercise-set__container">
+        <div class="form-row">
+            <div class="col">
+                <label for="Repetitions" class="sr-only">Repetitions</label>
+                <input class="exercise-set__field--repetitions form-control" type="number" data-val="true" data-val-range="You must have performed at least one rep." data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Repetitions field is required." id="Repetitions" name="ExerciseInstances[].ExerciseSets[].Repetitions" value="" />
+                <span class="text-danger field-validation-valid" data-valmsg-for="Repetitions" data-valmsg-replace="true"></span>
+            </div>
+            <div class="col">
+                <label for="Weight" class="sr-only">Weight</label>
+                <input class="exercise-set__field--weight form-control" type="number" data-val="true" data-val-range="Weight must be greater than zero." data-val-range-max="2147483647" data-val-range-min="0" data-val-required="The Weight field is required." id="Weight" name="ExerciseInstances[].ExerciseSqets[].Weight" value="" />
+                <span class="text-danger field-validation-valid" data-valmsg-for="Weight" data-valmsg-replace="true"></span>
+            </div>
+            <div class="col-auto">
+                <a href="#" class="exercise-set__trigger--remove-exercise-set align-middle" tabindex="-1">
+                    <i class="far fa-times-circle fa-2x"></i><span class="sr-only">Remove exercise set</span>
+                </a>
+            </div>
+        </div>
+    </li>
+</template>
+
+
+@section Scripts {
+    @* This will be injected into the _Layout.cshtml "Scripts" section at the end of the <body> when the page is rendered.*@
+
+    <script src="~/js/workouts/create.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+        // Defined in ~/js/workouts/create.js
+        WorkoutsCreate.init();
+    </script>
+}

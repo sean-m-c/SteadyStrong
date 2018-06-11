@@ -1,0 +1,16 @@
+﻿@using SteadyStrong.Mvc.Views.Manage
+@inject SignInManager<ApplicationUser> SignInManager
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+}
+
+<ul class="nav nav-pills flex-column">
+    <li class="@ManageNavPages.IndexNavClass(ViewContext) nav-item"><a asp-action="Index" class="nav-link">Profile</a></li>
+    <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext) nav-item"><a asp-action="ChangePassword" class="nav-link">Password</a></li>
+    @if (hasExternalLogins)
+    {
+        <li class="@ManageNavPages.ExternalLoginsNavClass(ViewContext) nav-item"><a asp-action="ExternalLogins" class="nav-link">External logins</a></li>
+    }
+    <li class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext) nav-item"><a asp-action="TwoFactorAuthentication" class="nav-link">Two-factor authentication</a></li>
+</ul>
+

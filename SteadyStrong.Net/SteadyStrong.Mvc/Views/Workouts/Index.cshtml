@@ -1,0 +1,63 @@
+﻿@model SteadyStrong.Mvc.Models.ApplicationViewModels.WorkoutsIndexViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+@section Styles {
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+}
+
+
+<h2 class="text-center mb-4">Lets do this, @Model.Username!</h2>
+
+@if (Model.Workouts.Count() < 1)
+{
+
+    <div class="alert alert-info text-center">
+        <p>You haven't completed any workouts.</p>
+        <p><a asp-action="Create" class="btn btn-outline-primary">Log your first workout <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></a></p>
+    </div>
+
+}
+else
+{
+    <p class="mb-4">
+        <a asp-action="Create" class="btn btn-lg btn-block btn-primary"><i class="fa fa-plus-square" aria-hidden="true"></i> Log new workout</a>
+    </p>
+
+    <div class="row">
+        <table class="table table-striped dataTable">
+            <thead>
+                <tr>
+                    <th>Workout Name</th>
+                    <th>Date</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var workout in Model.Workouts.OrderByDescending(w => w.CreatedTimestamp))
+                {
+                    <tr>
+                        <td>@workout.Name</td>
+                        <td>@workout.CreatedTimestamp</td>
+                        <td class="text-right"><a class="btn btn-outline-secondary" asp-action="Details" asp-route-id="@workout.Id"><i class="fas fa-info-circle"></i> View</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+
+@section Scripts {
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(function () {
+            $('.dataTable').DataTable();
+        });
+    </script>
+}

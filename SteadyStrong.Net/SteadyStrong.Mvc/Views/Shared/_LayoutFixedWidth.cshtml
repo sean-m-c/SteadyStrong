@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_Layout";
+}
+
+@section Styles {
+    @RenderSection("Styles", required: false)
+}
+
+<div class="container body-content">
+    @RenderBody()
+</div>
+
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

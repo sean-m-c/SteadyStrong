@@ -1,0 +1,38 @@
+﻿.exercise-instance {
+    margin-bottom: 30px;
+    border: 1px solid rgba(0, 0, 0, .12);
+    background-color: #f2f2f2;
+}
+
+    .exercise-instance.card {
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    }
+
+.exercise-instance__name {
+    font-size: 24px;
+    text-transform: uppercase;
+}
+
+ol.exercise-instance__exercise-set-list {
+    padding-left: 20px;
+}
+
+.exercise-instance-exercise-set-header .fa-placeholder {
+    color: transparent;
+}
+
+.exercise-instance__exercise-sets-list {
+    padding-left: 0;
+}
+
+.exercise-set__container ~ .exercise-set__container label {
+    display: none;
+}
+
+[class*=__trigger--remove-] {
+    color: #dc3545;
+}
+
+    [class*=__trigger--remove-]:hover {
+        color: #60161d;
+    }

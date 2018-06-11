@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_LayoutFullWidth";
+}
+
+
+@section Styles {
+    @* This will be injected into the _Layout.cshtml "Styles" section at the end of the head when the page is rendered.*@
+    <link rel="stylesheet" href="~/css/home/index.css" />
+}
+
+<div class="index-section row text-center">
+    <div class="container">
+        <h1 class="display-4">Steady Strong</h1>
+        <div class="text-center">
+            <p class="lead">Boost your workout progress by logging your exercises, reps, and sets.</h2>
+            <p>
+                <a asp-controller="Account" asp-action="Register" class="btn btn-outline-primary btn-lg">Register</a>
+                <a asp-controller="Account" asp-action="Login" class="btn btn-outline-secondary btn-lg">Sign in</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<div class="index-section row text-center">
+        <div class="container">
+            <h2 class="display-4">Maximize your progress</h2>
+            <div class="text-center">
+                <p class="lead">Get the most from your workouts using Steady Strong formulas to automatically calculate your perfect weight for each rep.</p>
+            </div>
+        </div>
+</div>
+
+<div class="index-section row text-center">
+    <div class="container">
+        <h2 class="display-4">Start Your Journey</h2>
+        <p class="lead"> <p>Create your free account or sign in to start tracking your workouts with Steady Strong.</p></p>
+
+        <p>
+            <a asp-controller="Account" asp-action="Register" class="btn btn-outline-primary btn-lg">Register</a>
+            <a asp-controller="Account" asp-action="Login" class="btn btn-outline-secondary btn-lg">Sign in</a>
+        </p>
+    </div>
+</div>

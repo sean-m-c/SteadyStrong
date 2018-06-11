@@ -1,0 +1,60 @@
+﻿@model SteadyStrong.Mvc.Models.DemoDescription
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+@section Styles {
+    <style>
+        .demo-description__iframe {
+            width: 98%;
+            min-height: 80vh;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        }
+    </style>
+}
+
+<div class="mb-4">
+    <a class="mb-4" href="@Model.PagePath">&laquo; Back to page</a>
+</div>
+
+<h2>Demo/Developer Details: /@Model.PagePath.Replace('-', '/')</h2>
+<hr />
+<div id="demo-description__container" class="row">
+    <div id="demo-description__description-container" class="col-xs-12 col-md-6">
+        @Html.Raw(Model.Description)
+    </div>
+    <div class="col-xs-12 col-md-6">
+        <iframe class="demo-description__iframe" frameborder="0" style="width:100%; height:100vh" src="@ViewBag.PreviousUrl"></iframe>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        // Demonstrating jQuery ability.
+        $(function () {
+            // Add nav menu with jump links to h3 titles.
+            var $descriptionContainer = $('#demo-description__description-container');
+
+            $descriptionContainer.prepend(`<ul id='demo-description__nav' class="nav flex-column"></ul><hr />`);
+
+            var $nav = $('#demo-description__nav');
+
+            $descriptionContainer.find('h3').each(function () {
+                var $header = $(this);
+
+                var headerText = $header.text();
+                var anchor = headerText.replace(' ', '-');
+
+                $header.attr('id', anchor);
+
+                $nav.append(`<li class="nav-item">
+                                        <a class="nav-link" href="#${anchor}">${headerText}</a>
+                                    </li>`);
+
+            })
+
+        });
+    </script>
+}

@@ -1,0 +1,36 @@
+﻿@model WorkoutsDetailsViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="breadcrumb">
+    <a asp-action="Index" class="breadcrumb-item">Workouts</a>
+    <span class="breadcrumb-item active">@Model.WorkoutName</span>
+</div>
+
+
+<a href="@Model.DataFileUri" target="_blank" class="float-right btn btn-primary"><i class="fa fa-download"></i> Download Raw XML</a>
+
+
+<div id="workout">@* XML will be loaded with AJAX, transformed with XSL stylesheet, and written in here.*@</div>
+
+
+@section Scripts {
+    @* This will be injected into the _Layout.cshtml "Scripts" section at the end of the <body> when the page is rendered.*@
+    
+    <script src="~/js/workouts/details.min.js"></script>
+
+    <script>
+    // These have to be generated here the view and passed into JS,
+        // since we don't want to hardcode the URLs in the JS file and
+        // Razor templating can only write the URLs into .cshtml files,
+        // it can't write them into JS files.
+        var urls = {
+            xslStylesheet: '/xsl/workout.xsl',
+            xmlDocument: '@Model.DataFileUri'
+        }
+
+        WorkoutsDetails.init(urls);
+    </script>
+}

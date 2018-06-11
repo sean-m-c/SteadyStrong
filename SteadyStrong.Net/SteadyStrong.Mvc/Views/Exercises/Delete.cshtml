@@ -1,0 +1,23 @@
+﻿@model SteadyStrong.Mvc.Models.Exercise
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div class="breadcrumb">
+    <a asp-action="Index" class="breadcrumb-item">Exercises</a>
+    <span class="breadcrumb-item active">Delete "@Model.Name"</span>
+</div>
+
+<div class="text-center">
+    <h3>Are you sure you want to delete "@Model.Name?</h3>
+    <div>
+        <hr />
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="Yes, delete this exercise" class="btn btn-lg btn-block btn-outline-danger" />
+            <hr />
+            <a asp-action="Index">No, take me back to the list of exercises.</a>
+        </form>
+    </div>
+</div>

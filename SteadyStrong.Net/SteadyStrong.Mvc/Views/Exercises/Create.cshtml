@@ -1,0 +1,33 @@
+﻿@model SteadyStrong.Mvc.Models.Exercise
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="breadcrumb">
+    <a asp-action="Index" class="breadcrumb-item">Exercises</a>
+    <span class="breadcrumb-item active">Create new</span>
+</div>
+
+
+<h2 class="text-center">Create Exercise</h2>
+
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Name" class=""></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-lg btn-block btn-outline-primary" />
+    </div>
+</form>
+
+<div class="text-center">
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
