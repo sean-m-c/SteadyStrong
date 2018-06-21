@@ -32,7 +32,7 @@ namespace SteadyStrong.Mvc
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("AzureSQLSteadyStrongConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()

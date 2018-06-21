@@ -31,7 +31,7 @@ namespace SteadyStrong.Mvc.Models
         [Required]
         public List<ExerciseInstance> ExerciseInstances { get; set; }
 
-        [Required]
+        [Key]
         public Guid Id { get; set; }
 
         [Required]

@@ -13,7 +13,7 @@ namespace SteadyStrong.Mvc.Models
     /// </summary>
     public class WorkoutMeta
     {
-        [Required]
+        [Key]
         public Guid Id { get; set; }
 
         [Required]
