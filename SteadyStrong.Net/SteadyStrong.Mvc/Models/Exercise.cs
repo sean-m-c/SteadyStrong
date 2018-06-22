@@ -17,5 +17,8 @@ namespace SteadyStrong.Mvc.Models
         [Required]
         [StringLength(40, MinimumLength=3, ErrorMessage = "The {0} must be at least {2} characters.")]
         public string Name { get; set; }
+
+
+        public ICollection<UserExercise> UserExercises { get; set; }
     }
 }

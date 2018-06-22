@@ -12,19 +12,23 @@ namespace SteadyStrong.Mvc.Data
     {
         public DbSet<DemoDescription> DemoDescriptions { get; set; }
         public DbSet<Exercise> Exercises { get; set; }
+        public DbSet<UserExercise> UserExercise { get; set; }
         public DbSet<WorkoutMeta> WorkoutMetas { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            // Customize the ASP.NET Identity model and override the defaults if needed.
-            // For example, you can rename the ASP.NET Identity table names and more.
-            // Add your customizations after calling base.OnModelCreating(builder);
+
+            // Composite key with exercise & user
+            builder.Entity<UserExercise>()
+                .HasKey(e => new { e.Exercise, e.User });
+
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SteadyStrong.Mvc.Data;
@@ -13,8 +14,12 @@ namespace SteadyStrong.Mvc.Controllers
     public class ExercisesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ExercisesController(ApplicationDbContext context)
+        public ExercisesController(
+            ApplicationDbContext context,
+            UserManager<ApplicationUser> userManager
+            )
         {
             _context = context;
         }
@@ -22,7 +27,16 @@ namespace SteadyStrong.Mvc.Controllers
         // GET: Exercises
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Exercises.OrderBy(i => i.Name).ToListAsync());
+            var user = await _userManager.GetUserAsync(User);
+
+            return View(
+                await _context.Exercises.
+                        Include(e => e.UserExercises.
+                            Where(ue => ue.User == user)
+                        ).
+                        OrderBy(i => i.Name).
+                        ToListAsync()
+            );
         }
 
         // GET: Exercises/Details/5
@@ -33,8 +47,12 @@ namespace SteadyStrong.Mvc.Controllers
                 return NotFound();
             }
 
-            var exercise = await _context.Exercises
-                .SingleOrDefaultAsync(m => m.Id == id);
+            var user = await _userManager.GetUserAsync(User);
+            var exercise = await _context.Exercises.
+                                    Include(e => e.UserExercises.
+                                        Where(ue => ue.User == user)
+                                    )
+                                    .SingleOrDefaultAsync(m => m.Id == id);
 
             if (exercise == null)
             {
